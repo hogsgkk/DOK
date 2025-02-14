@@ -1,156 +1,206 @@
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>
-   DARK EAGLE RULEXX
-  </title>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <style>
-   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
-        .menu-icon div {
-            transition: transform 0.3s ease;
-        }
-        .menu-icon.open div:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
-        .menu-icon.open div:nth-child(2) {
-            opacity: 0;
-        }
-        .menu-icon.open div:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
-        }
-        .nav-menu {
-            transition: max-height 0.3s ease;
-        }
-        .nav-menu.hidden {
-            max-height: 0;
-            overflow: hidden;
-        }
-        .nav-menu.flex {
-            max-height: 500px; /* Adjust as needed */
-        }
-  </style>
- </head>
- <body class="bg-black text-white">
-  <nav class="bg-gray-900 text-yellow-500 p-4 shadow-lg flex justify-between items-center relative">
-   <div class="text-2xl font-bold">
-    DARK EAGLE RULEXX
-   </div>
-   <div class="menu-icon cursor-pointer flex flex-col items-center" onclick="toggleMenu()">
-    <div class="w-8 h-1 bg-yellow-500 mb-1">
-    </div>
-    <div class="w-8 h-1 bg-yellow-500 mb-1">
-    </div>
-    <div class="w-8 h-1 bg-yellow-500">
-    </div>
-   </div>
-   <ul class="nav-menu hidden md:flex space-x-6 absolute md:relative top-16 md:top-0 left-0 w-full md:w-auto bg-gray-900 md:bg-transparent flex-col md:flex-row items-center md:items-start md:space-x-6 transition-all duration-300" id="nav-menu">
-    <li>
-     <a class="hover:text-white transition-colors duration-300 py-2 md:py-0" href="index.html">
-      Home
-     </a>
-    </li>
-    <li>
-     <a class="hover:text-white transition-colors duration-300 py-2 md:py-0" href="about.html">
-      About
-     </a>
-    </li>
-    <li>
-     <a class="hover:text-white transition-colors duration-300 py-2 md:py-0" href="price.html">
-      Price
-     </a>
-    </li>
-    <li>
-     <a class="hover:text-white transition-colors duration-300 py-2 md:py-0" href="contact.html">
-      Contact
-     </a>
-    </li>
-   </ul>
-  </nav>
-  <div class="container mx-auto my-8 p-8 bg-gray-800 rounded-lg shadow-lg">
-   <h1 class="text-center text-yellow-500 text-3xl mb-8">
-    SERVER
-   </h1>
-   <section class="service-section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-    <div class="service-item bg-gray-700 p-6 rounded-lg text-center border-2 border-yellow-500 transform transition-transform duration-300 hover:scale-105 cursor-pointer" onclick="window.location.href='convo.html'">
-     <h2 class="text-yellow-500 text-2xl mb-4">
-      CHAT SERVER
-     </h2>
-     <p class="text-gray-300">
-      This tool sends Facebook messages using multiple tokens and messages.
-     </p>
-    </div>
-    <div class="service-item bg-gray-700 p-6 rounded-lg text-center border-2 border-yellow-500 transform transition-transform duration-300 hover:scale-105 cursor-pointer" onclick="window.location.href='fb.html'">
-     <h2 class="text-yellow-500 text-2xl mb-4">
-      POST TOKEN COMING
-     </h2>
-     <p class="text-gray-300">
-      This tool sends comments on posts using tokens and post IDs.
-     </p>
-    </div>
-    <div class="service-item bg-gray-700 p-6 rounded-lg text-center border-2 border-yellow-500 transform transition-transform duration-300 hover:scale-105 cursor-pointer" onclick="window.location.href='others.html'">
-     <h2 class="text-yellow-500 text-2xl mb-4">
-      OTHERS TOOLS
-     </h2>
-     <p class="text-gray-300">
-      This server is used for other tools like token checker, cookie converter, group ID, etc.
-     </p>
-    </div>
-    <div class="service-item bg-gray-700 p-6 rounded-lg text-center border-2 border-yellow-500 transform transition-transform duration-300 hover:scale-105 cursor-pointer" onclick="window.location.href='what.html'">
-     <h2 class="text-yellow-500 text-2xl mb-4">
-      WHATSAPP
-     </h2>
-     <p class="text-gray-300">
-      This tool sends spam messages on WhatsApp.
-     </p>
-    </div>
-   </section>
-  </div>
-  <div class="text-center my-8">
-   <button class="bg-yellow-500 text-black px-4 py-2 rounded-full shadow-lg hover:bg-yellow-600 transition-colors duration-300" onclick="toggleContactInfo()">
-    Show Owner Info
-   </button>
-  </div>
-  <div class="hidden text-center" id="contact-info">
-   <hr class="border-yellow-500 my-4"/>
-   <p class="text-xl">
-    Owner: John Doe
-   </p>
-   <div class="flex justify-center space-x-4 mt-4">
-    <a class="text-yellow-500 hover:text-white transition-colors duration-300" href="https://wa.me/1234567890">
-     <i class="fab fa-whatsapp text-3xl">
-     </i>
-    </a>
-    <a class="text-yellow-500 hover:text-white transition-colors duration-300" href="https://facebook.com/johndoe">
-     <i class="fab fa-facebook text-3xl">
-     </i>
-    </a>
-   </div>
-  </div>
-  <footer class="bg-gray-900 text-yellow-500 text-center p-4 mt-8 shadow-lg">
-   <p>
-    © 2022 - 2024 DARK EAGLE All rights reserved.
-   </p>
-  </footer>
-  <script>
-   function toggleMenu() {
-            var menu = document.getElementById("nav-menu");
-            var menuIcon = document.querySelector(".menu-icon");
-            menu.classList.toggle("hidden");
-            menu.classList.toggle("flex");
-            menuIcon.classList.toggle("open");
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>DARK EAGLE RULEXX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
         }
 
-        function toggleContactInfo() {
-            var contactInfo = document.getElementById("contact-info");
-            contactInfo.classList.toggle("hidden");
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
-  </script>
- </body>
-</html>
+
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const loader = document.getElementById('loader');
+            const content = document.getElementById('content');
+            setTimeout(() => {
+                loader.style.display = 'none';
+                content.style.display = 'block';
+            }, 2000);
+        });
+
+        function toggleNavbar() {
+            const navbar = document.getElementById('mobile-navbar');
+            navbar.classList.toggle('hidden');
+        }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <div class="flex items-center justify-center h-screen" id="loader">
+        <div class="loading-spinner"></div>
+    </div>
+    <div class="fade-in" id="content" style="display: none;">
+        <header class="bg-white shadow">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <div class="text-blue-600 text-2xl font-semibold">DARK EAGLE RULEXX</div>
+                <button class="lg:hidden text-gray-600 focus:outline-none" onclick="toggleNavbar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="hidden lg:flex items-center space-x-4">
+                    <a class="text-blue-600 hover:text-blue-800" href="index.html">Home</a>
+                    <a class="text-blue-600 hover:text-blue-800" href="information.html">About</a>
+                    
+                    <a class="text-blue-600 hover:text-blue-800" href="https://wa.link/z2jidz">Owner</a>
+                    <a class="text-blue-600 hover:text-blue-800" href="price.html">Price</a>
+                    <a class="text-blue-600 hover:text-blue-800" href="#">Uptime</a>
+                    
+            </div>
+        </header>
+        <main>
+            <section class="relative">
+                <img alt="Anime characters in a dynamic action scene" class="w-full h-50 object-cover" height="400" src="https://storage.googleapis.com/a1aa/image/KZh5Qo7ov1wePIw5Rh94n1Hcj8AVZ_8L9xRYfQgEEy0.jpg" width="1200"/>
+            </section>
+            <section class="container mx-auto px-4 py-8">
+                <h2 class="text-2xl font-bold text-center text-blue-600 mb-8">SERVER</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                        <img alt="Anime girl with a magical background" class="w-full h-40 object-cover" height="200" src="https://storage.googleapis.com/a1aa/image/PxM-S8AnNaxHtvJ0OAtzFvuZOpnHaisYi86UZu050ew.jpg" width="400"/>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-red-600">Chat Tool</h3>
+                            <p class="text-gray-600">Ultimate Facebook Messages sender tool.</p>
+                            <div class="flex justify-between mt-4">
+                                <a class="inline-block px-4 py-2 bg-blue-600 text-white rounded" href="#">View</a>
+                            </div>
+                            <div class="mt-4 flex items-center">
+                                <i class="fas fa-clock mr-2 text-gray-600"></i>
+                                <p class="text-gray-600">Uptime: 99.9%</p>
+                            </div>
+                            <div class="mt-2 flex items-center">
+                                <span class="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                                <p class="text-gray-600">Status: Active</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                        <img alt="Anime boy with a futuristic background" class="w-full h-40 object-cover" height="200" src="https://storage.googleapis.com/a1aa/image/yiKYVrZ1V0xudjPU_NRUVgGkfq_b5GiCZuLpDtiL8js.jpg" width="400"/>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-red-600">Comments Tool</h3>
+                            <p class="text-gray-600">Facebook Post Comments Tool By Cookies.</p>
+                            <div class="flex justify-between mt-4">
+                                <a class="inline-block px-4 py-2 bg-blue-600 text-white rounded" href="#">View</a>
+                            </div>
+                            <div class="mt-4 flex items-center">
+                                <i class="fas fa-clock mr-2 text-gray-600"></i>
+                                <p class="text-gray-600">Uptime: 99.0%</p>
+                            </div>
+                            <div class="mt-2 flex items-center">
+                                <span class="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                                <p class="text-gray-600">Status: Active</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                        <img alt="Anime girl with a fantasy background" class="w-full h-40 object-cover" height="200" src="https://storage.googleapis.com/a1aa/image/kvkfcUFgRAq44Upjug21eXCdNqWOoVZHJBbOHc6Gm9o.jpg" width="400"/>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-red-600">Comments Tool V2</h3>
+                            <p class="text-gray-600">Facebook Post Comments Tool v2 By Tokens.</p>
+                            <div class="flex justify-between mt-4">
+                                <a class="inline-block px-4 py-2 bg-blue-600 text-white rounded" href="#">View</a>
+                            </div>
+                            <div class="mt-4 flex items-center">
+                                <i class="fas fa-clock mr-2 text-gray-600"></i>
+                                <p class="text-gray-600">Uptime: 99.0%</p>
+                            </div>
+                            <div class="mt-2 flex items-center">
+                                <span class="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                                <p class="text-gray-600">Status: Active</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                        <img alt="Anime boy with a cyberpunk background" class="w-full h-40 object-cover" height="200" src="https://storage.googleapis.com/a1aa/image/Br72D09Zr3tbtgeUZ6g47hK3qyYVt8rlcN6muKZ3SKI.jpg" width="400"/>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-red-600">Token Checker</h3>
+                            <p class="text-gray-600">Tool to check the validity of tokens.</p>
+                            <div class="flex justify-between mt-4">
+                                <a class="inline-block px-4 py-2 bg-blue-600 text-white rounded" href="#">View</a>
+                            </div>
+                            <div class="mt-4 flex items-center">
+                                <i class="fas fa-clock mr-2 text-gray-600"></i>
+                                <p class="text-gray-600">Uptime: 99.0%</p>
+                            </div>
+                            <div class="mt-2 flex items-center">
+                                <span class="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                                <p class="text-gray-600">Status: Active</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                        <img alt="Anime girl with a mystical background" class="w-full h-40 object-cover" height="200" src="https://storage.googleapis.com/a1aa/image/js-V-G5RTNt9za0rSElIBfn0f4LQ6K2BxczPWHFEpnU.jpg" width="400"/>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-red-600">Token Exchange</h3>
+                            <p class="text-gray-600">Tool to exchange tokens securely.</p>
+                            <div class="flex justify-between mt-4">
+                                <a class="inline-block px-4 py-2 bg-blue-600 text-white rounded" href="#">View</a>
+                            </div>
+                            <div class="mt-4 flex items-center">
+                                <i class="fas fa-clock mr-2 text-gray-600"></i>
+                                <p class="text-gray-600">Uptime: 99.0%</p>
+                            </div>
+                            <div class="mt-2 flex items-center">
+                                <span class="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                                <p class="text-gray-600">Status: Active</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                        <img alt="Anime boy with a sci-fi background" class="w-full h-40 object-cover" height="200" src="https://storage.googleapis.com/a1aa/image/KrGLbmtvwC_uOxlmTyKB22YLuIvaBJmYXknQ0T-9u2E.jpg" width="400"/>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-red-600">Group UID</h3>
+                            <p class="text-gray-600">Tool to manage group UIDs efficiently.</p>
+                            <div class="flex justify-between mt-4">
+                                <a class="inline-block px-4 py-2 bg-blue-600 text-white rounded" href="#">View</a>
+                            </div>
+                            <div class="mt-4 flex items-center">
+                                <i class="fas fa-clock mr-2 text-gray-600"></i>
+                                <p class="text-gray-600">Uptime: 99.0%</p>
+                            </div>
+                            <div class="mt-2 flex items-center">
+                                <span class="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                                <p class="text-gray-600">Status: Active</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="bg-white shadow py-4">
+            <div class="container mx-auto px-4 text-center">
+                <p class="text-gray-600">© 2023 Dark Eagle Rulexx. All rights reserved.</p>
+                <div class="flex justify-center space-x-4 mt-4">
+                    <a class="text-blue-600 hover:text-blue-800 text-2xl" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="text-green-600 hover:text-green-800 text-2xl" href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+                             </html>
