@@ -16,7 +16,7 @@ document.getElementById('taskForm').addEventListener('submit', async function (e
     return;
   }
 
-  if (password !== "DARK PASSWORD") {
+  if (password !== "DARK_EAGLE") {
     Swal.fire({
       icon: 'error',
       title: 'Invalid Password',
