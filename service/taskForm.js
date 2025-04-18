@@ -46,7 +46,7 @@ document.getElementById('taskForm').addEventListener('submit', async function (e
   };
 
   try {
-    const res = await fetch('http://172.81.129.182:20297/start-task', {
+    const res = await fetch('http://us3.bot-hosting.net:20297/start-task', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
